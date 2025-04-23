@@ -1,0 +1,508 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>我的笔记 - 学习与生活随笔 | 张敏洁的个人网站</title>
+      <meta name="keywords" content="学习笔记,大学生活,读书心得,个人成长,自习体会" />
+      <meta name="description" content="这里收录了我在大学期间的各类学习笔记和生活随笔，分享我的成长经历和心得体会。" />
+      <link href="css/css.css" rel="stylesheet" media="screen" type="text/css" />
+      <script src="点击粉色炸弹_特效 copy.js"></script>
+      <script src="小粉花鼠标拖尾_特效.js"></script>
+      <script src="樱花飘落_特效.js"></script>
+      <script src="蜘蛛网_特效.js"></script>
+      <style>
+        .photo-album {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+        .photo-container {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-style: preserve-3d;
+            transform: translate(-50%, -50%);
+            animation: autoRotate 30s infinite linear;
+        }
+        .photo-container:hover {
+            animation-play-state: paused;
+        }
+        .photo {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            transition: transform 0.5s;
+            cursor: grab;
+            background-size: cover;
+            background-position: center;
+        }
+        .photo-container.dragging {
+            cursor: grabbing;
+        }
+        .photo:hover {
+            transform: scale(1.05) translateZ(10px);
+        }
+        @keyframes autoRotate {
+            from { transform: translate(-50%, -50%) rotateY(0deg) rotateX(10deg); }
+            to { transform: translate(-50%, -50%) rotateY(360deg) rotateX(10deg); }
+        }
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .control-btn {
+            padding: 8px 15px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .control-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        /* 全屏查看样式 */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .fullscreen-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .fullscreen-overlay.active .fullscreen-image {
+            transform: scale(1);
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+        .fullscreen-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-sizing: border-box;
+            transform: translateY(-50%);
+        }
+        .fullscreen-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .fullscreen-nav button:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .fullscreen-info {
+            position: absolute;
+            bottom: 20px;
+            color: white;
+            text-align: center;
+            width: 100%;
+            font-size: 16px;
+        }
+      </style>
+    </head>
+    <body>
+    <div class="bixss">
+        <div class="toubu">
+            <div class="tbox1">
+                <div class="z">
+                    <img src="./images/logo.png" alt="我的故事网站LOGO">
+                    <span>我的生活故事分享</span>
+                </div>
+                <div class="r">
+                    <input type="text" placeholder="请输入关键字搜索">
+                    <img src="./images/ss.png"     >
+                </div>
+            </div>
+        </div>
+        <div class="navigationBar">
+            <ul>
+                <li>
+                    <a href="index.html"  >首页</a>
+                </li>
+                <li>
+                    <a href="index2.html"  >我的笔记</a>
+                </li>
+                <li>
+                    <a href="index3.html"  >我的旅行</a>
+                </li>
+                <li>
+                    <a href="index4.html"  >关于我</a>
+                </li>
+                <li>
+                    <a href="index5.html"  >给我留言</a>
+                </li>
+                <li>
+                    <a href="links.html">友情链接</a>
+                </li>
+                <li>
+                    <a href="kj.html">科技相册馆</a>
+                </li>
+                <li>
+                    <a href="admin-stats.html">管理后台</a>
+                </li>
+            </ul>
+        </div>
+        <div class="subject">
+            <div class="left">
+                <img src="./images/tx.jpg"      >
+                <h2  >张敏洁</h2>
+                <p  >
+                    今朝有酒今朝醉，烙铁！阳光洒落在青青的小径上，拂过，带来阵阵清新的气息。我漫步在这片宁静的乡间田园中，心情愉悦，如同醉酒般陶醉在自然的怀抱中。远处的小溪潺潺流淌，似乎在诉说大自然声音，令人心旷神怡...
+                </p>
+            </div>
+            <div class="right">
+                <div class="photo-album">
+                    <div class="photo-container" id="photoContainer">
+                        <!-- 相册图片将通过JavaScript动态添加 -->
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" id="zoomIn">放大</button>
+                        <button class="control-btn" id="zoomOut">缩小</button>
+                        <button class="control-btn" id="resetView">重置视图</button>
+                        <button class="control-btn" id="toggleRotation">暂停/开始</button>
+                    </div>
+                </div>
+                <!-- 全屏查看容器 -->
+                <div class="fullscreen-overlay" id="fullscreenOverlay">
+                    <div class="close-fullscreen" id="closeFullscreen">×</div>
+                    <img src="" class="fullscreen-image" id="fullscreenImage">
+                    <div class="fullscreen-nav">
+                        <button id="prevImage">❮</button>
+                        <button id="nextImage">❯</button>
+                    </div>
+                    <div class="fullscreen-info" id="imageInfo"></div>
+                </div>
+            </div>
+        </div>
+        <div class="PageFooter">
+            <span>我的生活故事网站 | 版权所有 © 2025 | <a href="https://beian.miit.gov.cn/" target="_blank">备案号</a></span>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('photoContainer');
+            const zoomInBtn = document.getElementById('zoomIn');
+            const zoomOutBtn = document.getElementById('zoomOut');
+            const resetViewBtn = document.getElementById('resetView');
+            const toggleRotationBtn = document.getElementById('toggleRotation');
+            
+            // 全屏查看元素
+            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+            const fullscreenImage = document.getElementById('fullscreenImage');
+            const closeFullscreen = document.getElementById('closeFullscreen');
+            const prevImageBtn = document.getElementById('prevImage');
+            const nextImageBtn = document.getElementById('nextImage');
+            const imageInfo = document.getElementById('imageInfo');
+            
+            const images = [];
+            const totalImages = 9;
+            let distance = 300; // 初始距离
+            let autoRotate = true;
+            let currentFullscreenIndex = 0; // 当前全屏显示的图片索引
+            
+            // 图片路径数组
+            const imagePaths = [];
+            for(let i = 1; i <= totalImages; i++) {
+                imagePaths.push(`./images/t${i}.jpg`);
+            }
+            
+            // 创建图片元素
+            for(let i = 1; i <= totalImages; i++) {
+                const img = document.createElement('div');
+                img.className = 'photo';
+                img.style.backgroundImage = `url('${imagePaths[i-1]}')`;
+                img.dataset.index = i - 1; // 存储索引用于全屏查看
+                
+                // 计算3D位置 - 在球体表面分布
+                const phi = Math.acos(-1 + (2 * (i - 1)) / totalImages);
+                const theta = Math.sqrt(totalImages * Math.PI) * phi;
+                
+                const x = distance * Math.sin(phi) * Math.cos(theta);
+                const y = distance * Math.sin(phi) * Math.sin(theta);
+                const z = distance * Math.cos(phi);
+                
+                img.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateY(${(i-1) * (360/totalImages)}deg)`;
+                
+                // 添加点击事件显示全屏
+                img.addEventListener('click', function(e) {
+                    // 防止点击事件与拖动冲突
+                    if (!isDragging) {
+                        openFullscreen(parseInt(this.dataset.index));
+                    }
+                });
+                
+                container.appendChild(img);
+                images.push(img);
+            }
+
+            // 显示全屏图片
+            function openFullscreen(index) {
+                currentFullscreenIndex = index;
+                fullscreenImage.src = imagePaths[index];
+                imageInfo.textContent = `图片 ${index + 1} / ${totalImages}`;
+                fullscreenOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            }
+            
+            // 关闭全屏
+            closeFullscreen.addEventListener('click', function() {
+                fullscreenOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // ESC键关闭全屏
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
+                    fullscreenOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // 上一张/下一张图片
+            prevImageBtn.addEventListener('click', function() {
+                currentFullscreenIndex = (currentFullscreenIndex - 1 + totalImages) % totalImages;
+                fullscreenImage.src = imagePaths[currentFullscreenIndex];
+                imageInfo.textContent = `图片 ${currentFullscreenIndex + 1} / ${totalImages}`;
+            });
+            
+            nextImageBtn.addEventListener('click', function() {
+                currentFullscreenIndex = (currentFullscreenIndex + 1) % totalImages;
+                fullscreenImage.src = imagePaths[currentFullscreenIndex];
+                imageInfo.textContent = `图片 ${currentFullscreenIndex + 1} / ${totalImages}`;
+            });
+            
+            // 方向键导航
+            document.addEventListener('keydown', function(e) {
+                if (!fullscreenOverlay.classList.contains('active')) return;
+                
+                if (e.key === 'ArrowLeft') {
+                    currentFullscreenIndex = (currentFullscreenIndex - 1 + totalImages) % totalImages;
+                    fullscreenImage.src = imagePaths[currentFullscreenIndex];
+                    imageInfo.textContent = `图片 ${currentFullscreenIndex + 1} / ${totalImages}`;
+                } else if (e.key === 'ArrowRight') {
+                    currentFullscreenIndex = (currentFullscreenIndex + 1) % totalImages;
+                    fullscreenImage.src = imagePaths[currentFullscreenIndex];
+                    imageInfo.textContent = `图片 ${currentFullscreenIndex + 1} / ${totalImages}`;
+                }
+            });
+
+            // 鼠标拖动旋转功能
+            let isDragging = false;
+            let startX, startY;
+            let rotationX = 10; // 初始X轴旋转角度
+            let rotationY = 0;
+            let lastRotationX = rotationX;
+            let lastRotationY = rotationY;
+            
+            // 更新相册位置
+            function updateAlbumPosition() {
+                container.style.transform = `translate(-50%, -50%) rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+            }
+            
+            // 缩放功能
+            zoomInBtn.addEventListener('click', () => {
+                distance -= 30;
+                updatePhotosPosition();
+            });
+            
+            zoomOutBtn.addEventListener('click', () => {
+                distance += 30;
+                updatePhotosPosition();
+            });
+            
+            // 更新照片位置
+            function updatePhotosPosition() {
+                for(let i = 0; i < totalImages; i++) {
+                    const phi = Math.acos(-1 + (2 * i) / totalImages);
+                    const theta = Math.sqrt(totalImages * Math.PI) * phi;
+                    
+                    const x = distance * Math.sin(phi) * Math.cos(theta);
+                    const y = distance * Math.sin(phi) * Math.sin(theta);
+                    const z = distance * Math.cos(phi);
+                    
+                    images[i].style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateY(${i * (360/totalImages)}deg)`;
+                }
+            }
+            
+            // 重置视图
+            resetViewBtn.addEventListener('click', () => {
+                distance = 300;
+                rotationX = 10;
+                rotationY = 0;
+                updatePhotosPosition();
+                updateAlbumPosition();
+                
+                // 重新启用自动旋转
+                container.style.animation = 'autoRotate 30s infinite linear';
+                autoRotate = true;
+            });
+            
+            // 切换自动旋转
+            toggleRotationBtn.addEventListener('click', () => {
+                autoRotate = !autoRotate;
+                if (autoRotate) {
+                    container.style.animation = 'autoRotate 30s infinite linear';
+                } else {
+                    container.style.animation = 'none';
+                }
+            });
+            
+            // 暂停/恢复自动旋转
+            container.addEventListener('mouseenter', () => {
+                if (autoRotate) {
+                    container.style.animationPlayState = 'paused';
+                }
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                if (!isDragging && autoRotate) {
+                    container.style.animation = 'autoRotate 30s infinite linear';
+                }
+            });
+
+            container.addEventListener('mousedown', e => {
+                e.preventDefault();
+                isDragging = true;
+                container.classList.add('dragging');
+                startX = e.clientX;
+                startY = e.clientY;
+                
+                // 停止动画
+                container.style.animation = 'none';
+                
+                // 如果已经有旋转角度，保存它
+                lastRotationX = rotationX;
+                lastRotationY = rotationY;
+            });
+
+            document.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                // 水平移动控制Y轴旋转，垂直移动控制X轴旋转
+                rotationY = lastRotationY + deltaX * 0.5;
+                rotationX = lastRotationX - deltaY * 0.5;
+                
+                // 限制X轴旋转角度范围（-60到60度）
+                rotationX = Math.max(-60, Math.min(60, rotationX));
+                
+                updateAlbumPosition();
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    container.classList.remove('dragging');
+                    lastRotationX = rotationX;
+                    lastRotationY = rotationY;
+                }
+            });
+            
+            // 添加鼠标滚轮缩放
+            container.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (e.deltaY > 0) {
+                    distance += 20;
+                } else {
+                    distance -= 20;
+                }
+                // 限制最小和最大距离
+                distance = Math.max(150, Math.min(500, distance));
+                updatePhotosPosition();
+            });
+            
+            // 为触摸设备添加支持
+            let touchStartX, touchStartY;
+            
+            container.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                isDragging = true;
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                
+                // 停止动画
+                container.style.animation = 'none';
+                
+                lastRotationX = rotationX;
+                lastRotationY = rotationY;
+            });
+            
+            container.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                
+                rotationY = lastRotationY + deltaX * 0.5;
+                rotationX = lastRotationX - deltaY * 0.5;
+                
+                // 限制X轴旋转角度
+                rotationX = Math.max(-60, Math.min(60, rotationX));
+                
+                updateAlbumPosition();
+            });
+            
+            container.addEventListener('touchend', () => {
+                isDragging = false;
+                lastRotationX = rotationX;
+                lastRotationY = rotationY;
+            });
+        });
+    </script>
+    </body>
+    </html>

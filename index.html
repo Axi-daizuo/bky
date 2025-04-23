@@ -1,0 +1,930 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <title>张敏洁的个人故事 - 生活记录与心情分享</title>
+      <meta name="keywords" content="个人故事,生活记录,旅行笔记,心情分享,大学生活" />
+      <meta name="description" content="这是一个记录个人生活故事、旅行见闻和心情分享的个人网站，欢迎浏览我的故事和经历。" />
+      <link href="css/css.css" rel="stylesheet" media="screen" type="text/css" />
+      <script src="点击粉色炸弹_特效 copy.js"></script>
+      <script src="小粉花鼠标拖尾_特效.js"></script>
+      <script src="樱花飘落_特效.js"></script>
+      <script src="蜘蛛网_特效.js"></script>
+      <style>
+        .load-more {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .load-more button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .load-more button:hover {
+            background: #2980b9;
+        }
+        .right {
+            max-height: 910px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .right::-webkit-scrollbar {
+            width: 6px;
+        }
+        .right::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .right::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        .right::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* 回到顶部按钮样式 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: rgba(52, 152, 219, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: none;
+        }
+        .back-to-top:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+        }
+
+        /* 文章鼠标经过交互样式增强 */
+        .rightbox {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .rightbox:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .rightbox img {
+            transition: all 0.5s ease;
+        }
+        .rightbox:hover img {
+            transform: scale(1.05);
+        }
+        .rightbox .wz h1 {
+            transition: color 0.3s ease;
+        }
+        .rightbox:hover .wz h1 {
+            color: #3498db;
+        }
+
+        /* 新增区域样式 */
+        .additional-content {
+            background-color: #f9f9f9;
+            padding: 40px 0;
+            margin-top: 30px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #3498db;
+            margin: 10px auto;
+        }
+        .recommend-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .recommend-item {
+            display: flex;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: calc(50% - 10px);
+            transition: transform 0.3s;
+        }
+        .recommend-item:hover {
+            transform: translateY(-5px);
+        }
+        .recommend-item img {
+            width: 120px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .recommend-info {
+            padding: 15px;
+            flex: 1;
+        }
+        .recommend-info h3 {
+            font-size: 18px;
+            margin: 0 0 5px;
+            color: #333;
+        }
+        .recommend-info p {
+            margin: 0 0 10px;
+            color: #555;
+        }
+        .recommend-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .recommend-list {
+                flex-direction: column;
+            }
+            .recommend-item {
+                width: 100%;
+            }
+        }
+
+        /* 统计信息栏样式 */
+        .stats-bar {
+            background-color: #f5f5f5;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 15px;
+        }
+        .stats-info {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .stats-info span {
+            font-size: 16px;
+            color: #555;
+        }
+        .stats-info strong {
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        /* 加载指示器样式 */
+        .loading-indicator {
+            text-align: center;
+            padding: 20px 0;
+            clear: both;
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(52, 152, 219, 0.3);
+            border-radius: 50%;
+            border-top-color: #3498db;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-indicator p {
+            color: #777;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* 文章序号样式 */
+        .rightbox {
+            position: relative;
+        }
+        .article-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(52, 152, 219, 0.9);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            /* 兼容IE浏览器的居中方式 */
+            text-align: center;
+            line-height: 30px;
+        }
+      </style>
+    </head>
+    <body>
+        <audio src="./images/1.mp3" autoplay  loop></audio>
+    <div class="bixss">
+        <div class="toubu">
+            <div class="tbox1">
+                <div class="z">
+                    <img src="./images/logo.png" alt="我的故事网站LOGO">
+                    <span>我的生活故事分享</span>
+                </div>
+                <div class="r">
+                    <input type="text" placeholder="请输入关键字搜索">
+                    <img src="./images/ss.png"     >
+                </div>
+            </div>
+
+        </div>
+        <div class="navigationBar">
+            <ul>
+                <li>
+                    <a href="index.html"  >首页</a>
+                </li>
+                <li>
+                    <a href="index2.html"  >我的笔记</a>
+                </li>
+                <li>
+                    <a href="index3.html"  >我的旅行</a>
+                </li>
+                <li>
+                    <a href="index4.html"  >关于我</a>
+                </li>
+                <li>
+                    <a href="index5.html"  >给我留言</a>
+                </li>
+                <li>
+                    <a href="links.html">友情链接</a>
+                </li>
+                <li>
+                    <a href="kj.html">科技相册馆</a>
+                </li>
+                <li>
+                    <a href="admin-stats.html">管理后台</a>
+                </li>
+            </ul>
+        </div>
+        <!-- 文章统计信息栏 -->
+        <div class="stats-bar">
+            <div class="container">
+                <div class="stats-info">
+                    <span>文章总数: <strong id="totalArticles">0</strong></span>
+                    <span>评论总数: <strong id="totalComments">0</strong></span>
+                </div>
+            </div>
+        </div>
+        <div class="subject">
+            <div class="left">
+                <img src="./images/tx.jpg" alt="张敏洁的头像">
+                <h2>张敏洁</h2>
+                <p>
+                    信息技术与创意设计学院 22云计算2班<br>
+                    学号: 22510206030256<br>
+                    生日: 2004年7月3日<br>
+                    爱好: 电影、音乐、游戏、篮球、羽毛球<br>
+                    星座: 巨蟹座
+                </p>
+                <p>
+                    今朝有酒今朝醉，烙铁！阳光洒落在青青的小径上，拂过，带来阵阵清新的气息。我漫步在这片宁静的乡间田园中，心情愉悦，如同醉酒般陶醉在自然的怀抱中。远处的小溪潺潺流淌，似乎在诉说大自然声音，令人心旷神怡...
+                </p>
+            </div>
+            <div class="right" id="articlesContainer">
+                <!-- 动态加载文章内容 -->
+                            </div>
+                        </div>
+        
+        <!-- 添加加载指示器 -->
+        <div class="loading-indicator" id="loadingIndicator" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>加载中...</p>
+                </div>
+
+        <div class="PageFooter">
+            <span>我的生活故事网站 | 版权所有 © 2025 | <a href="https://beian.miit.gov.cn/" target="_blank">备案号</a></span>
+                            </div>
+                        </div>
+
+    </div>
+    <div class="back-to-top" id="backToTop">顶部</div>
+
+    <!-- 网站统计代码 -->
+    <script src="./statistics.js"></script>
+    <script>
+        // 统计信息控制台显示（管理员可见）
+        console.log('网站访问统计初始化完成');
+        
+        // 管理员界面链接
+        function showStatsAdmin() {
+            var stats = window.getVisitStats();
+            if (stats) {
+                alert('页面访问量: ' + stats.pageViews + '\n访客数: ' + stats.visitors);
+            }
+        }
+
+        // 文章数据数组
+        const articleData = [
+            {
+                id: 1,
+                title: '去图书馆自习',
+                content: '今天去图书馆自习，看到很多同学认真学习，仿佛整个空间都充满了专注和奋斗的气息。他们或许在为期末考试做准备，或者是为了追求自己的梦想而不懈努力...',
+                date: '2025-03-15',
+                image: './images/1.jpg',
+                comments: 12,
+                author: '张敏洁'
+            },
+            {
+                id: 2,
+                title: '参加社团活动',
+                content: '今天参加了社团的户外活动，这是一个让我充满期待的周末。早上，阳光明媚，微风拂面，我和社团的小伙伴们聚集在校园门口，准备开始一场充满乐趣和挑战的探险之旅...',
+                date: '2025-03-16',
+                image: './images/2.jpg',
+                comments: 20,
+                author: '张敏洁'
+            },
+            {
+                id: 3,
+                title: '和朋友聚餐',
+                content: '晚上，我和朋友们相聚一堂，共同品尝了各种美食，气氛非常愉快。餐厅里弥漫着诱人的香气，我们围坐在一起，一边享受着美食，一边畅谈着生活的点滴...',
+                date: '2025-03-17',
+                image: './images/3.jpg',
+                comments: 15,
+                author: '张敏洁'
+            },
+            {
+                id: 4,
+                title: '假期旅游',
+                content: '假期来临，我迫不及待地和家人一起规划了一场郊游，心怀期待地迎接着与大自然的亲密接触。清晨，我们一家人早早地出发了，汽车穿过城市的喧嚣，驶向郊外...',
+                date: '2025-03-18',
+                image: './images/4.jpg',
+                comments: 18,
+                author: '张敏洁'
+            },
+            {
+                id: 5,
+                title: '观看一场精彩电影',
+                content: '今天和朋友一起去电影院观看了一部期待已久的电影，感受颇深。银幕上的画面和故事情节深深吸引了我，让我沉浸在一个全新的世界当中...',
+                date: '2025-03-19',
+                image: './images/5.jpg',
+                comments: 23,
+                author: '张敏洁'
+            },
+            {
+                id: 6,
+                title: '尝试新的菜谱',
+                content: '周末的午后，我决定在厨房尝试一道从未做过的菜肴。准备材料、按步骤操作，虽然过程中有些手忙脚乱，但最终成品的味道还是相当不错的...',
+                date: '2025-03-20',
+                image: './images/6.jpg',
+                comments: 14,
+                author: '张敏洁'
+            },
+            {
+                id: 7,
+                title: '参加学校运动会',
+                content: '今天是学校一年一度的运动会，我代表班级参加了800米长跑比赛。赛场上，同学们的呐喊声此起彼伏，为运动员们加油助威，整个校园洋溢着青春和活力...',
+                date: '2025-03-21',
+                image: './images/7.jpg',
+                comments: 19,
+                author: '张敏洁'
+            },
+            {
+                id: 8,
+                title: '学习新技能的一天',
+                content: '最近对摄影产生了浓厚的兴趣，今天专门抽出时间学习相机的基本操作和构图技巧。虽然刚开始接触，但每一次按下快门都让我感到无比兴奋...',
+                date: '2025-03-22',
+                image: './images/8.jpg',
+                comments: 16,
+                author: '张敏洁'
+            },
+            {
+                id: 9,
+                title: '周末逛书店的收获',
+                content: '今天下午，我独自去了城里最大的书店，在琳琅满目的书架间穿梭，寻找着心仪的书籍。最终，我挑选了几本文学作品和一本摄影指南，满载而归...',
+                date: '2025-03-23',
+                image: './images/1.jpg',
+                comments: 21,
+                author: '张敏洁'
+            },
+            {
+                id: 10,
+                title: '参加志愿者活动',
+                content: '今天参加了学校组织的社区志愿服务活动，我们一起去敬老院看望老人们。与老人们聊天、表演节目、帮助打扫，虽然辛苦但内心充满了满足感...',
+                date: '2025-03-24',
+                image: './images/2.jpg',
+                comments: 25,
+                author: '张敏洁'
+            },
+            {
+                id: 11,
+                title: '与老友重逢',
+                content: '久未见面的高中好友今天来学校找我，我们一起回忆过去的时光，分享各自的大学生活。多年的友谊依然温暖如初，让我倍感珍惜这段难得的情谊...',
+                date: '2025-03-25',
+                image: './images/3.jpg',
+                comments: 13,
+                author: '张敏洁'
+            },
+            {
+                id: 12,
+                title: '校园樱花季的感受',
+                content: '校园里的樱花盛开了，粉色的花朵装点着整个校园，美不胜收。午后，我坐在樱花树下读书，花瓣随风飘落，仿佛置身于一个梦幻的世界...',
+                date: '2025-03-26',
+                image: './images/4.jpg',
+                comments: 28,
+                author: '张敏洁'
+            },
+            {
+                id: 13,
+                title: '期末考试的紧张准备',
+                content: '期末考试即将来临，这几天我一直在图书馆复习功课。知识点繁多，压力不小，但我相信只要坚持不懈，一定能取得好成绩...',
+                date: '2025-03-27',
+                image: './images/5.jpg',
+                comments: 17,
+                author: '张敏洁'
+            },
+            {
+                id: 14,
+                title: '探索城市新景点',
+                content: '今天和几个室友一起去了城市新开的文化公园，那里的建筑融合了传统与现代元素，非常独特。我们参观了艺术展览，体验了各种文化活动，度过了愉快的一天...',
+                date: '2025-03-28',
+                image: './images/6.jpg',
+                comments: 22,
+                author: '张敏洁'
+            },
+            {
+                id: 15,
+                title: '参加技术讲座',
+                content: '学校今天邀请了一位业内专家来做技术讲座，内容涉及人工智能的最新发展。讲座内容深入浅出，让我对这个领域有了更清晰的认识，也更加坚定了我的专业方向...',
+                date: '2025-03-29',
+                image: './images/7.jpg',
+                comments: 18,
+                author: '张敏洁'
+            },
+            {
+                id: 16,
+                title: '宿舍聚餐的欢乐',
+                content: '今晚宿舍几个人一起做饭聚餐，大家各展厨艺，做出了丰盛的一桌菜。我们边吃边聊，分享着最近的趣事和心情，宿舍的友谊在这样的时刻更加深厚...',
+                date: '2025-03-30',
+                image: './images/8.jpg',
+                comments: 20,
+                author: '张敏洁'
+            },
+            {
+                id: 17,
+                title: '完成一个编程项目',
+                content: '经过两周的努力，我终于完成了一个小型编程项目。虽然过程中遇到了不少困难，但每解决一个问题都让我感到成就感和喜悦。这次经历让我的编程能力有了很大提升...',
+                date: '2025-03-31',
+                image: './images/1.jpg',
+                comments: 24,
+                author: '张敏洁'
+            },
+            {
+                id: 18,
+                title: '观看日出的感动',
+                content: '今天早起爬上了城市附近的山峰，只为观看那一抹日出。朝阳从地平线升起的那一刻，温暖的光芒洒向大地，让人心生感动。大自然的壮丽景色让我暂时忘却了生活的烦恼...',
+                date: '2025-04-01',
+                image: './images/2.jpg',
+                comments: 26,
+                author: '张敏洁'
+            },
+            {
+                id: 19,
+                title: '尝试素描画画',
+                content: '今天参加了学校艺术社团组织的素描课程，第一次正式学习素描技巧。虽然我的作品还很稚嫩，但老师的鼓励和指导让我对艺术创作充满了热情和期待...',
+                date: '2025-04-02',
+                image: './images/3.jpg',
+                comments: 15,
+                author: '张敏洁'
+            },
+            {
+                id: 20,
+                title: '音乐会的美妙体验',
+                content: '今晚学校举办了一场音乐会，我有幸欣赏到了多位音乐才子的精彩表演。美妙的旋律在音乐厅回荡，让我沉浸在艺术的海洋中，内心充满了宁静与感动...',
+                date: '2025-04-03',
+                image: './images/4.jpg',
+                comments: 19,
+                author: '张敏洁'
+            },
+            {
+                id: 21,
+                title: '帮助学弟学妹解答问题',
+                content: '今天有几位学弟学妹来找我咨询学习方面的问题。能够用自己的经验帮助他们解惑，我感到非常开心。看到他们恍然大悟的表情，我也收获了满满的成就感...',
+                date: '2025-04-04',
+                image: './images/5.jpg',
+                comments: 14,
+                author: '张敏洁'
+            },
+            {
+                id: 22,
+                title: '参加篮球比赛',
+                content: '今天代表班级参加了院系篮球比赛，我们队默契配合，最终赢得了胜利。场上的拼搏和团队精神让我深受感染，体育竞技的魅力在这一刻展现得淋漓尽致...',
+                date: '2025-04-05',
+                image: './images/6.jpg',
+                comments: 23,
+                author: '张敏洁'
+            },
+            {
+                id: 23,
+                title: '图书馆的安静时光',
+                content: '下午在图书馆度过了宁静的几小时，阅读一本关于心理学的书籍。在知识的海洋中遨游，时间过得特别快，却也特别充实。安静的阅读时光是对心灵最好的滋养...',
+                date: '2025-04-06',
+                image: './images/7.jpg',
+                comments: 16,
+                author: '张敏洁'
+            },
+            {
+                id: 24,
+                title: '实习面试的经历',
+                content: '今天去参加了一家公司的实习面试，虽然有些紧张，但我认真准备的回答还是给面试官留下了不错的印象。无论结果如何，这次经历都让我对职场有了更清晰的认识...',
+                date: '2025-04-07',
+                image: './images/8.jpg',
+                comments: 21,
+                author: '张敏洁'
+            },
+            {
+                id: 25,
+                title: '校园摄影记录',
+                content: '今天带着相机在校园里拍摄，捕捉那些平凡却美好的瞬间。同学们在草坪上看书、打闹的场景，老师们认真工作的身影，以及校园里每一处充满生机的角落...',
+                date: '2025-04-08',
+                image: './images/1.jpg',
+                comments: 18,
+                author: '张敏洁'
+            },
+            {
+                id: 26,
+                title: '小组讨论项目进展',
+                content: '今天和课程小组成员一起讨论期末项目，大家贡献各自的想法，共同完善方案。虽然有不同意见，但通过坦诚交流，我们最终达成了共识，项目也有了新的进展...',
+                date: '2025-04-09',
+                image: './images/2.jpg',
+                comments: 15,
+                author: '张敏洁'
+            },
+            {
+                id: 27,
+                title: '校园美食节探店',
+                content: '学校本周举办美食节，各种特色小吃吸引了众多学生。和朋友们一起品尝了多种美食，每一种都有着独特的口味和魅力，让我大饱口福的同时也感受到了美食文化的多样性...',
+                date: '2025-04-10',
+                image: './images/3.jpg',
+                comments: 27,
+                author: '张敏洁'
+            },
+            {
+                id: 28,
+                title: '参与环保志愿活动',
+                content: '今天参加了学校环保社团组织的校园清洁活动。我们分组清理垃圾，宣传环保理念，希望通过自己的行动影响更多人关注环境保护。每个人的小行动汇聚起来，就能让世界更美好...',
+                date: '2025-04-11',
+                image: './images/4.jpg',
+                comments: 20,
+                author: '张敏洁'
+            },
+            {
+                id: 29,
+                title: '学习新的编程语言',
+                content: '最近开始学习一门新的编程语言，今天花了整整一天时间深入研究其基础语法和应用场景。虽然学习新知识需要付出努力，但掌握新技能的过程也充满了乐趣和成就感...',
+                date: '2025-04-12',
+                image: './images/5.jpg',
+                comments: 14,
+                author: '张敏洁'
+            },
+            {
+                id: 30,
+                title: '参观艺术展览',
+                content: '今天去市中心的美术馆参观了一场当代艺术展览。艺术家们通过不同的媒介和表现手法，展现了他们对世界的独特理解和思考。这次参观让我的艺术视野得到了很大拓展...',
+                date: '2025-04-13',
+                image: './images/6.jpg',
+                comments: 19,
+                author: '张敏洁'
+            },
+            {
+                id: 31,
+                title: '早起晨跑的习惯',
+                content: '最近开始培养早起晨跑的习惯，今天是坚持的第七天。清晨的校园格外宁静美丽，沐浴在晨光中跑步让人精神焕发。坚持锻炼不仅让身体更健康，也让一天的学习更有活力...',
+                date: '2025-04-14',
+                image: './images/7.jpg',
+                comments: 16,
+                author: '张敏洁'
+            },
+            {
+                id: 32,
+                title: '观看话剧表演',
+                content: '晚上和朋友一起去剧院观看了一场话剧表演。演员们精湛的演技将故事情节展现得淋漓尽致，让观众如身临其境。文艺表演的魅力在于它能够触动人心，引发共鸣...',
+                date: '2025-04-15',
+                image: './images/8.jpg',
+                comments: 22,
+                author: '张敏洁'
+            },
+            {
+                id: 33,
+                title: '参加社团筹备活动',
+                content: '今天参与了社团年度活动的筹备工作，和团队成员一起讨论活动主题、流程安排以及物资准备。大家群策群力，各自发挥所长，为即将到来的活动奠定了良好基础...',
+                date: '2025-04-16',
+                image: './images/1.jpg',
+                comments: 17,
+                author: '张敏洁'
+            },
+            {
+                id: 34,
+                title: '寝室大扫除',
+                content: '周末和室友们一起进行了一次彻底的寝室大扫除。我们清理了每个角落，整理了各自的物品，给寝室换上了新面貌。干净整洁的环境不仅让人心情舒畅，也更有利于学习生活...',
+                date: '2025-04-17',
+                image: './images/2.jpg',
+                comments: 13,
+                author: '张敏洁'
+            },
+            {
+                id: 35,
+                title: '体验陶艺制作',
+                content: '今天参加了学校艺术中心组织的陶艺课程，第一次尝试用双手创作陶器。捏陶的过程需要耐心和专注，看着自己的作品从一团黏土逐渐成型，内心充满了成就感和喜悦...',
+                date: '2025-04-18',
+                image: './images/3.jpg',
+                comments: 24,
+                author: '张敏洁'
+            },
+            {
+                id: 36,
+                title: '参加校园歌唱比赛',
+                content: '今晚参加了校园歌唱比赛的初赛，虽然有些紧张，但还是鼓起勇气登上舞台，唱出了自己最拿手的一首歌。台下观众的掌声和鼓励让我倍感温暖，也更加坚定了追求音乐梦想的决心...',
+                date: '2025-04-19',
+                image: './images/4.jpg',
+                comments: 28,
+                author: '张敏洁'
+            },
+            {
+                id: 37,
+                title: '参与学术讨论会',
+                content: '今天参加了系里组织的学术讨论会，几位教授和高年级学长分享了他们的研究成果和心得体会。学术氛围浓厚，讨论热烈，让我对自己的专业领域有了更深的理解和兴趣...',
+                date: '2025-04-20',
+                image: './images/5.jpg',
+                comments: 15,
+                author: '张敏洁'
+            },
+            {
+                id: 38,
+                title: '城市徒步探险',
+                content: '今天和几个好友一起进行了一次城市徒步探险，走过了许多平时不会去的街区和角落。沿途发现了许多特色小店和隐藏的风景，城市的另一面在步行中慢慢展现...',
+                date: '2025-04-21',
+                image: './images/6.jpg',
+                comments: 19,
+                author: '张敏洁'
+            },
+            {
+                id: 39,
+                title: '线上课程学习日',
+                content: '今天在家专心学习了几门线上课程，涉及专业知识和兴趣爱好。网络时代让学习不再受时间和空间的限制，足不出户就能获取全球优质的教育资源，真是太方便了...',
+                date: '2025-04-22',
+                image: './images/7.jpg',
+                comments: 12,
+                author: '张敏洁'
+            },
+            {
+                id: 40,
+                title: '尝试咖啡制作',
+                content: '今天去了朋友开的咖啡馆，学习了基本的咖啡制作技巧。从选豆、研磨到萃取、拉花，每一步都需要专业知识和熟练技巧。虽然第一次尝试成果不太完美，但整个过程非常有趣...',
+                date: '2025-04-23',
+                image: './images/8.jpg',
+                comments: 20,
+                author: '张敏洁'
+            },
+            {
+                id: 41,
+                title: '观星夜活动',
+                content: '今晚参加了天文社组织的观星活动，在学校附近的山顶架设望远镜，观察夜空中的星星和行星。解读星图、辨认星座，仰望浩瀚宇宙的感觉让人既渺小又充满敬畏...',
+                date: '2025-04-24',
+                image: './images/1.jpg',
+                comments: 26,
+                author: '张敏洁'
+            },
+            {
+                id: 42,
+                title: '参加演讲比赛',
+                content: '今天代表班级参加了学院的演讲比赛，我选择了"青年责任与担当"这个主题。台上的三分钟虽然短暂，但凝聚了我多日的准备和思考。无论结果如何，敢于站上舞台表达自己已经是一种成长...',
+                date: '2025-04-25',
+                image: './images/2.jpg',
+                comments: 23,
+                author: '张敏洁'
+            },
+            {
+                id: 43,
+                title: '校园樱花雨',
+                content: '今天校园里的樱花开始大量飘落，形成了美丽的樱花雨景观。漫步在花瓣纷飞的校园小路上，仿佛置身于童话世界。这短暂而美丽的自然奇观吸引了众多同学驻足拍照...',
+                date: '2025-04-26',
+                image: './images/3.jpg',
+                comments: 30,
+                author: '张敏洁'
+            },
+            {
+                id: 44,
+                title: '期中考试的总结',
+                content: '期中考试结束了，今天花时间对考试情况进行了总结反思。找出了学习中的不足之处，也制定了下半学期的学习计划。每次考试都是一次检验，更是继续前进的动力...',
+                date: '2025-04-27',
+                image: './images/4.jpg',
+                comments: 14,
+                author: '张敏洁'
+            },
+            {
+                id: 45,
+                title: '尝试做西点',
+                content: '今天在家尝试制作了曲奇饼干和蛋糕，按照视频教程一步步操作。烘焙需要耐心和精确，虽然成品与预期有些差距，但自己动手的过程和成果还是让我感到很有成就感...',
+                date: '2025-04-28',
+                image: './images/5.jpg',
+                comments: 19,
+                author: '张敏洁'
+            },
+            {
+                id: 46,
+                title: '校友分享会',
+                content: '今天参加了学院举办的校友分享会，几位优秀校友分享了他们毕业后的职场经历和人生感悟。他们的故事既真实又励志，让我对未来的职业规划有了更清晰的思考...',
+                date: '2025-04-29',
+                image: './images/6.jpg',
+                comments: 21,
+                author: '张敏洁'
+            },
+            {
+                id: 47,
+                title: '植物园一日游',
+                content: '今天和朋友一起去了市植物园，欣赏各种珍稀植物和美丽花卉。园内环境优美，空气清新，是放松身心的好去处。我们拍了许多照片，记录下这美好的一天...',
+                date: '2025-04-30',
+                image: './images/7.jpg',
+                comments: 17,
+                author: '张敏洁'
+            },
+            {
+                id: 48,
+                title: '五一假期计划',
+                content: '明天就要开始五一假期了，今天整理了假期计划，包括旅行、读书和一些小项目的完成。合理规划时间，既能放松休息，又能有所收获，让假期过得充实而有意义...',
+                date: '2025-05-01',
+                image: './images/8.jpg',
+                comments: 13,
+                author: '张敏洁'
+            },
+            {
+                id: 49,
+                title: '野外徒步旅行',
+                content: '假期第一天和户外俱乐部的朋友们一起进行了一次野外徒步活动。山林间的小径、清澈的溪流、鸟鸣虫叫，大自然的美景让人心旷神怡，也让城市生活的压力得到了释放...',
+                date: '2025-05-02',
+                image: './images/1.jpg',
+                comments: 24,
+                author: '张敏洁'
+            },
+            {
+                id: 50,
+                title: '参观历史博物馆',
+                content: '今天去参观了市历史博物馆，了解这座城市的发展历程和文化底蕴。历史的长河中有太多值得我们铭记和思考的故事，透过文物和展览，仿佛能与过去对话，感受时间的厚重...',
+                date: '2025-05-03',
+                image: './images/2.jpg',
+                comments: 22,
+                author: '张敏洁'
+            }
+        ];
+        // 当前已加载的文章数量
+        let loadedArticles = 0;
+        const articlesPerLoad = 4;
+        
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+        }
+        
+        // 计算总评论数量
+        function calculateTotalComments() {
+            return articleData.reduce((total, article) => total + (article.comments || 0), 0);
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            document.getElementById('totalArticles').textContent = articleData.length;
+            document.getElementById('totalComments').textContent = calculateTotalComments();
+        }
+        
+        // 显示加载指示器
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        }
+        
+        // 隐藏加载指示器
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+        
+        // 在DOM加载完成后排序文章数组（按日期降序）
+        document.addEventListener('DOMContentLoaded', function() {
+            // 对文章数据按日期降序排序（最新的在前面）
+            articleData.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // 初始更新统计信息
+            updateStats();
+            
+            // 初始加载文章
+            loadArticles();
+            
+            // 添加滚动监听
+            const rightContainer = document.querySelector('.right');
+            rightContainer.addEventListener('scroll', function() {
+                // 如果滚动到底部，自动加载更多
+                if (rightContainer.scrollHeight - rightContainer.scrollTop <= rightContainer.clientHeight + 100) {
+                    if (loadedArticles < articleData.length) {
+                        showLoading();
+                        
+                        // 延迟2秒加载，模拟网络请求
+                        setTimeout(function() {
+                            loadArticles();
+                            hideLoading();
+                        }, 2000);
+                    }
+                }
+                
+                // 回到顶部按钮显示/隐藏
+                const backToTop = document.getElementById('backToTop');
+                if (rightContainer.scrollTop > 300) {
+                    backToTop.style.display = 'block';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+            
+            // 回到顶部点击事件
+            const backToTop = document.getElementById('backToTop');
+            backToTop.addEventListener('click', function() {
+                const rightContainer = document.querySelector('.right');
+                rightContainer.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 加载文章函数
+        function loadArticles() {
+            const container = document.getElementById('articlesContainer');
+            const end = Math.min(loadedArticles + articlesPerLoad, articleData.length);
+            
+            for (let i = loadedArticles; i < end; i++) {
+                const article = articleData[i];
+                const articleElement = document.createElement('div');
+                articleElement.className = 'rightbox';
+                
+                // 计算文章序号（按照在数组中的位置 + 1）
+                const articleNumber = i + 1;
+                
+                // 使用URL参数传递文章ID
+                articleElement.innerHTML = `
+                    <a href="article.html?id=${article.id}">
+                        <div class="article-number">${articleNumber}</div>
+                        <img src="${article.image}" alt="${article.title}">
+                        <div class="wz">
+                            <h1>${article.title}</h1>
+                            <p>${article.content}</p>
+                            <div class="b-b"></div>
+                            <div class="tb">
+                                <li>${article.author}</li>
+                                <li>${formatDate(article.date)}</li>
+                                <li>评论：${article.comments}</li>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                
+                container.appendChild(articleElement);
+            }
+            
+            loadedArticles = end;
+            
+            // 如果所有文章都已加载，隐藏"加载更多"按钮
+            if (loadedArticles >= articleData.length) {
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    loadMoreBtn.style.display = 'none';
+                }
+            }
+        }
+    </script>
+
+
+    </body>
+    </html>

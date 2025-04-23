@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站统计信息管理后台 - 张敏洁的个人网站</title>
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196f3;
+            --secondary-color: #00bcd4;
+            --dark-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --text-secondary: #b0b0b0;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 500;
+        }
+        
+        .header p {
+            margin: 10px 0 0;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .stats-card h3 {
+            margin: 0 0 15px 0;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .stats-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        
+        .stats-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .trend-up {
+            color: #4caf50;
+        }
+        
+        .trend-down {
+            color: #f44336;
+        }
+        
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            margin: 0 0 20px 0;
+            color: var(--text-color);
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .realtime-data {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .data-stream {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+        }
+        
+        .data-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .data-item:last-child {
+            border-bottom: none;
+        }
+        
+        .data-time {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 40px;
+        }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>网站统计信息管理后台</h1>
+            <p>登录账号：admin 密码：********</p>
+        </div>
+        
+        <div class="nav">
+            <button class="nav-btn" onclick="location.href='index.html'">
+                <span>返回首页</span>
+            </button>
+            <button class="nav-btn" onclick="refreshStats()">
+                <span>刷新数据</span>
+            </button>
+            <button class="nav-btn" onclick="resetStats()">
+                <span>重置统计</span>
+            </button>
+            <button class="nav-btn" onclick="toggleTheme()">
+                <span>切换主题</span>
+            </button>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stats-card">
+                <h3>总访问量</h3>
+                <div class="stats-value" id="totalPageViews">-</div>
+                <div class="stats-trend trend-up">
+                    <span>↑ 12.5%</span>
+                    <span>较上周</span>
+                </div>
+            </div>
+            <div class="stats-card">
+                <h3>独立访客数</h3>
+                <div class="stats-value" id="totalVisitors">-</div>
+                <div class="stats-trend trend-up">
+                    <span>↑ 8.3%</span>
+                    <span>较上周</span>
+                </div>
+            </div>
+            <div class="stats-card">
+                <h3>平均停留时间</h3>
+                <div class="stats-value">2分45秒</div>
+                <div class="stats-trend trend-down">
+                    <span>↓ 5.2%</span>
+                    <span>较上周</span>
+                </div>
+            </div>
+            <div class="stats-card">
+                <h3>跳出率</h3>
+                <div class="stats-value">32.5%</div>
+                <div class="stats-trend trend-down">
+                    <span>↓ 3.1%</span>
+                    <span>较上周</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">访问趋势</h3>
+            <canvas id="visitsChart"></canvas>
+        </div>
+        
+        <div class="chart-container">
+            <h3 class="chart-title">设备分布</h3>
+            <canvas id="devicesChart"></canvas>
+        </div>
+        
+        <div class="realtime-data">
+            <h3 class="chart-title">实时访问</h3>
+            <div class="data-stream" id="realtimeStream">
+                <!-- 实时数据将通过JavaScript动态添加 -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            网站统计系统 v2.0 | © 2024 张敏洁的个人网站
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="./statistics.js"></script>
+    <script>
+        // 图表实例
+        let visitsChart, devicesChart;
+        
+        // 初始化页面数据
+        function initStatsPage() {
+            const stats = window.getVisitStats ? window.getVisitStats() : null;
+            
+            if (stats) {
+                // 更新基础数据
+                document.getElementById('totalPageViews').textContent = stats.pageViews || 0;
+                document.getElementById('totalVisitors').textContent = stats.visitors || 0;
+                
+                // 初始化图表
+                initCharts();
+                
+                // 开始实时数据更新
+                startRealtimeUpdates();
+            } else {
+                console.error('统计数据不可用');
+            }
+        }
+        
+        // 初始化图表
+        function initCharts() {
+            // 访问趋势图
+            const visitsCtx = document.getElementById('visitsChart').getContext('2d');
+            visitsChart = new Chart(visitsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    datasets: [{
+                        label: '访问量',
+                        data: [120, 190, 150, 170, 200, 250, 180],
+                        borderColor: '#2196f3',
+                        backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255,255,255,0.1)'
+                            },
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // 设备分布图
+            const devicesCtx = document.getElementById('devicesChart').getContext('2d');
+            devicesChart = new Chart(devicesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['PC', '手机', '平板'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: [
+                            '#2196f3',
+                            '#4caf50',
+                            '#ff9800'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // 实时数据更新
+        function startRealtimeUpdates() {
+            const stream = document.getElementById('realtimeStream');
+            
+            // 模拟实时数据
+            setInterval(() => {
+                const now = new Date();
+                const time = now.toLocaleTimeString();
+                const device = ['PC', '手机', '平板'][Math.floor(Math.random() * 3)];
+                const location = ['北京', '上海', '广州', '深圳', '杭州'][Math.floor(Math.random() * 5)];
+                
+                const item = document.createElement('div');
+                item.className = 'data-item';
+                item.innerHTML = `
+                    <span>${device} - ${location}</span>
+                    <span class="data-time">${time}</span>
+                `;
+                
+                stream.insertBefore(item, stream.firstChild);
+                
+                // 限制显示数量
+                if (stream.children.length > 10) {
+                    stream.removeChild(stream.lastChild);
+                }
+            }, 3000);
+        }
+        
+        // 刷新统计数据
+        function refreshStats() {
+            initStatsPage();
+            // 添加刷新动画效果
+            document.querySelectorAll('.stats-card').forEach(card => {
+                card.style.animation = 'none';
+                card.offsetHeight; // 触发重绘
+                card.style.animation = 'pulse 0.5s';
+            });
+        }
+        
+        // 重置统计数据
+        function resetStats() {
+            if (confirm('确定要重置所有统计数据吗？此操作不可恢复！')) {
+                localStorage.removeItem('visitStats');
+                localStorage.removeItem('visited');
+                location.reload();
+            }
+        }
+        
+        // 切换主题
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+            // 更新图表主题
+            visitsChart.options.scales.y.grid.color = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+            visitsChart.options.scales.x.grid.color = document.body.classList.contains('light-theme') ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)';
+            visitsChart.update();
+            devicesChart.update();
+        }
+        
+        // 页面加载完成后初始化数据
+        window.addEventListener('load', initStatsPage);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,281 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  background: url(../images/bj.jpg) no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  background-attachment: fixed;
+}
+
+.bixss {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 20px;
+  width: 1200px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 40px;
+  box-sizing: border-box;
+}
+.toubu {
+  height: 200px;
+  background: url(../images/bjtp.jpg) no-repeat;
+  background-size: cover;
+
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.tbox1 {
+  width: 100%;
+  padding-top: 60px;
+}
+.tbox1 img {
+  float: left;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  margin-left: 50px;
+}
+
+/* logo标题 */
+.tbox1 .z {
+  float: left;
+  font-family: "宋体";
+  font-size: 35px;
+  height: 80px;
+  color: #323232;
+  line-height: 80px;
+}
+.tbox1 .r {
+  position: relative;
+  float: right;
+  margin-right: 70px;
+}
+.tbox1 .r img {
+  position: absolute;
+  right: 0px;
+  top: 29px;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+}
+.tbox1 .r input {
+  margin-top: 25px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  width: 100%;
+  border-radius: 2px;
+}
+/* 导航栏颜色 */
+.navigationBar {
+  height: 60px;
+  line-height: 60px;
+  background-color: #54b66d;
+}
+ul {
+  list-style: none;
+}
+.navigationBar li {
+  float: left;
+  width: 145px;
+  text-align: center;
+}
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.subject {
+  overflow: hidden;
+}
+/* 侧边栏颜色 */
+.subject .left {
+  float: left;
+  width: 200px;
+  height: 920px;
+  padding: 20px;
+  background-color: #568ab3;
+}
+.subject .left img {
+  border-radius: 10px;
+  width: 100%;
+  border: 3px solid #ffffff;
+}
+.subject .left h2 {
+  color: #ffffff;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 400;
+}
+.subject .left p {
+  color: #ffffff;
+  font-size: 12px;
+  text-align: justify;
+  margin-top: 10px;
+  text-indent: 2em;
+  line-height: 26px;
+}
+.subject .right {
+  float: left;
+  padding: 20px;
+  width: 960px;
+  background-color: #f1f1f1;
+}
+.rightbox {
+  margin-bottom: 20px;
+  border-radius: 6px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.rightbox img {
+  float: left;
+  width: 200px;
+  height: 230px;
+  border-radius: 6px;
+}
+.wz {
+  background-color: #ffffff;
+  float: left;
+  width: 710px;
+  height: 230px;
+  padding: 20px 40px;
+}
+.wz h1 {
+  font-weight: 400;
+  color: #555;
+  font-size: 22px;
+}
+.wz p {
+  margin-top: 20px;
+  line-height: 2em;
+  color: #a0a0a0;
+}
+.tb li {
+  float: left;
+  list-style: none;
+  color: #a0a0a0;
+  height: 50px;
+  width: 196px;
+  line-height: 50px;
+  text-align: center;
+}
+.b-b {
+  margin-top: 15px;
+  border-bottom: 1px solid rgba(222, 229, 231, 0.45);
+}
+.PageFooter {
+  height: 30px;
+
+  line-height: 50px;
+  text-align: center;
+  color: #787878;
+}
+.right ul li {
+  padding: 10px;
+  color: #a0a0a0;
+  list-style: none;
+  line-height: 2em;
+  height: 440px;
+  width: 305px;
+  float: left;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+}
+.right ul li img {
+  width: 100%;
+  height: 305px;
+  border-radius: 5px;
+}
+h3 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+p {
+  text-indent: 2em;
+}
+.gyw {
+  overflow: hidden;
+}
+.gyw img {
+  width: 450px;
+  height: 450px;
+  float: left;
+  margin-right: 20px;
+}
+.gyw table {
+  padding: 20px;
+  color: #787878;
+  float: left;
+  width: 450px;
+  height: 450px;
+  background-color: #ffffff;
+}
+.gyw table td {
+  line-height: 30px;
+}
+.xc img {
+  width: 303px;
+  border: 20px solid #ffffff;
+  box-sizing: border-box;
+}
+h4 {
+  padding-left: 20px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #fff;
+  margin: 30px 0;
+  color: #787878;
+  font-size: 20px;
+}
+.gwly {
+  background-color: #fff;
+  padding: 70px;
+}
+.gwly table {
+  height: 740px;
+  width: 700px;
+  margin: 0 auto;
+}
+.gwly table input {
+  width: 100%;
+  border: 1px solid #ccc;
+  height: 55px;
+}
+textarea {
+  padding: 20px;
+  border: 1px solid #ccc;
+  height: 400px;
+  width: 100%;
+}
+.wdbj {
+  background-color: #fff;
+  padding: 20px;
+  color: #787878;
+  height: 880px;
+}
+.wdbj h1 {
+  text-align: center;
+}
+.wdbj .rq {
+  width: 500px;
+  margin: 15px auto ;
+
+}
+.wdbj span {
+  margin: 0 20px;
+}
+.wdbj p {
+  text-align: justify;
+  line-height: 30px;
+}
+.wdbj img{
+  float: right;
+  width: 250px;
+  margin-left: 5px;
+}
